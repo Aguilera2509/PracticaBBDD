@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+import sqlite3
 
 
 root = Tk()
@@ -7,53 +8,53 @@ root = Tk()
 #----------------------------------- OTRAS CARACTERISTICAS ---------------------------
 
 root.title("Guardado de Datos")
-root.geometry("300x280")
+root.geometry("300x330")
 root.iconbitmap('Database.ico.ico')
 root.resizable(0,0)
 
 #---------------------------------- DATOS PEDIDOS -----------------------------
 
-#Falta IP------------
+#Falta IP -------------------------------
 
 NameVar = Label(root, text="Nombre:")
-NameVar.grid(row=0, column=3, sticky = E, pady=10, padx=10)
+NameVar.grid(row=0, column=0, sticky = E, pady=10, padx=10)
 
 ApellidoVar = Label(root, text="Apellido:")
-ApellidoVar.grid(row=1, column=3, sticky = E, pady=10, padx=10)
+ApellidoVar.grid(row=1, column=0, sticky = E, pady=10, padx=10)
 
 PasswordVar = Label(root, text="Contrasenia:")
-PasswordVar.grid(row=2, column=3, sticky = E, pady=10, padx=10)
+PasswordVar.grid(row=2, column=0, sticky = E, pady=10, padx=10)
 
 DirrecionVar = Label(root, text="Direccion:")
-DirrecionVar.grid(row=3, column=3, sticky = E, pady=10, padx=10)
+DirrecionVar.grid(row=3, column=0, sticky = E, pady=10, padx=10)
 
 EdadVar = Label(root, text="Edad:")
-EdadVar.grid(row=4, column=3, sticky = E, pady=10, padx=10)
+EdadVar.grid(row=4, column=0, sticky = E, pady=10, padx=10)
 
 GeneroVar = Label(root, text="Genero:")
-GeneroVar.grid(row=5, column=3, sticky = E, pady=10, padx=10)
+GeneroVar.grid(row=5, column=0, sticky = E, pady=10, padx=10)
 
 #----------------------------------- RELLENAR DATOS -------------------------------
 
 #Falta IP Para leer---------------
 
 NameEntry = Entry(root, width=30)
-NameEntry.grid(row=0, column=4)
+NameEntry.grid(row=0, column=1)
 
 ApellidoEntry = Entry(root, width=30)
-ApellidoEntry.grid(row=1, column=4)
+ApellidoEntry.grid(row=1, column=1)
 
 PasswordEntry = Entry(root, width=30, show="*")
-PasswordEntry.grid(row=2, column=4)
+PasswordEntry.grid(row=2, column=1)
 
 DirrecionEntry = Entry(root, width=30)
-DirrecionEntry.grid(row=3, column=4)
+DirrecionEntry.grid(row=3, column=1)
 
 EdadEntry = Entry(root, width=30)
-EdadEntry.grid(row=4,column=4)
+EdadEntry.grid(row=4,column=1)
 
 GeneroEntry = Entry(root, width=30)
-GeneroEntry.grid(row=5, column=4)
+GeneroEntry.grid(row=5, column=1)
 
 #-------------------------------------- BARRA DE MENU ----------------------------------
 
@@ -104,6 +105,22 @@ menubar.add_cascade(label="Ayuda", menu= Ayudamenu)
 
 #----------------------------------------------- BOTONES -----------------------------------
 
+B1 = Button(root, text="Crear")
+B1.place(x=20, y=260)
+B1.config(width=5, height=2)
 
+B2 = Button(root, text="Leer")
+B2.place(x=85, y=260)
+B2.config(width=5, height=2)
+
+B3 = Button(root, text="Actualizar")
+B3.place(x=150, y=260)
+B3.config(width=8, height=2)
+
+B4 = Button(root, text="Eliminar")
+B4.place(x=230, y=260)
+B4.config(width=6, height=2)
+
+#--------------------------------------------- BBDD(BASE DE DATOS) -------------------------------------
 
 root.mainloop()
