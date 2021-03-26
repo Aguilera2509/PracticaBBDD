@@ -6,12 +6,31 @@ import sqlite3
 
 root = Tk()
 
-#----------------------------------- OTRAS CARACTERISTICAS ---------------------------
+#----------------------------------- FUNCION DECORADORA PARA LAS BASES DE DATOS -----------------------------
+
+def funcion_permiso(funcion_aprobada):
+
+    def funcion_decoradora():
+
+        try:
+
+            funcion_aprobada()
+
+        except sqlite3.OperationalError:
+
+            messagebox.showwarning(message="No ha creado la base de datos, ni ha guardado informacion que pueda manipular", 
+            title="Error Operacional")
+
+    return funcion_decoradora
+
+
+#----------------------------------- OTRAS CARACTERISTICAS PARA LA GUI---------------------------
 
 root.title("Guardado de Datos")
 root.geometry("340x400")
 root.iconbitmap('Database.ico.ico')
 root.resizable(0,0)
+
 
 #---------------------------------- DATOS PEDIDOS -----------------------------
 
@@ -38,6 +57,7 @@ GeneroVar.grid(row=6, column=0, sticky = E, pady=10, padx=10)
 
 CorreoVar = Label(root, text="Correo electronico:")
 CorreoVar.grid(row=7, column=0, sticky = E, pady=10, padx=10)
+
 
 #----------------------------------- RELLENAR DATOS -------------------------------
 
@@ -76,6 +96,7 @@ GeneroEntry.grid(row=6, column=1)
 CorreoEntry = Entry(root, width=30, textvariable=miCorreo)
 CorreoEntry.grid(row=7, column=1)
 
+
 #-------------------------------------- BARRA DE MENU ----------------------------------
 
 menubar = Menu(root)
@@ -87,16 +108,19 @@ def derechosReservados():
     messagebox.showinfo(message="""Estos derechos están reservados por parte de
 Aguilera D. José A.""", title="Base de Datos")
 
+
 def funcion():
     messagebox.showinfo(message="""El programa sirve para almacenar datos de una persona de manera ilimitada
 en su propia Pc, ya que no hay una base de datos remota, las personas solo tendrán que rellenar 
 las pautas planteadas""", title="Funcion del programa")
+
 
 def quit():
     opcion = messagebox.askyesno(message="¿Desea salir?",title="Salir")
 
     if opcion == True:
         exit()
+
 
 def borrar():
 
@@ -107,6 +131,7 @@ def borrar():
     miEdad.set("")
     miGenero.set("")
     miCorreo.set("")
+
 
 #FUNCIÓN PARA CREAR LA BASE DE DATOS----------------------------------------
 
@@ -123,7 +148,8 @@ def create():
 
     except sqlite3.OperationalError:
 
-        messagebox.showwarning(message="Ya la Base de Datos Existe", title="Error Operacional")
+        messagebox.showwarning(message="Ya existe la Base de Datos Existe", title="BBDD")
+
 
 #Funciones de los SubMenus------------------------------------------------
 
@@ -149,9 +175,8 @@ menubar.add_cascade(label="Ayuda", menu= Ayudamenu)
 
 #--------------------------------------------- BBDD(BASE DE DATOS) -------------------------------------
 
+@funcion_permiso
 def guardarInformacion():
-
-    create()
 
     IP2 = sqlite3.connect("Almacenamiento De Datos.bd")
     Servidor2 = IP2.cursor()
@@ -169,6 +194,7 @@ def guardarInformacion():
     messagebox.showinfo(message="Se ha guardado la informacion con exito", title="Tabla De Datos")
 
 
+@funcion_permiso
 def leerInformacion():
 
     IP3 = sqlite3.connect("Almacenamiento De Datos.bd")
@@ -191,6 +217,8 @@ def leerInformacion():
 
     IP3.commit()
 
+
+@funcion_permiso
 def actualizarInformacion():
 
     IP4 = sqlite3.connect("Almacenamiento De Datos.bd")
@@ -210,6 +238,7 @@ def actualizarInformacion():
     messagebox.showinfo(message="Se ha actualizado la informacion con exito", title="Tabla De Datos")
 
 
+@funcion_permiso
 def eliminarInfomacion():
 
     IP5 = sqlite3.connect("Almacenamiento De Datos.bd")
@@ -221,14 +250,15 @@ def eliminarInfomacion():
 
     messagebox.showinfo(message="Se ha eleminado la informacion con exito", title="Tabla De Datos")
 
+
 #----------------------------------------------- BOTONES -----------------------------------
 
-B1 = Button(root, text="Crear", command=guardarInformacion)
+B1 = Button(root, text="guardar", command=guardarInformacion)
 B1.place(x=30, y=330)
-B1.config(width=5, height=2)
+B1.config(width=6, height=2)
 
 B2 = Button(root, text="Leer", command=leerInformacion)
-B2.place(x=100, y=330)
+B2.place(x=105, y=330)
 B2.config(width=5, height=2)
 
 B3 = Button(root, text="Actualizar", command=actualizarInformacion)
